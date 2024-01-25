@@ -1,6 +1,6 @@
-abstract class KeyValueStorageStorage {
+abstract class KeyValueStorage {
   
-  Future<void> setKeyValue(String key, value);
-  Future getValue(String key, value);
+  Future<void> setKeyValue<T>(String key, T value);
+  Future <T?> getValue<T>(String key);
   Future<bool> removeKey(String key);
 }
