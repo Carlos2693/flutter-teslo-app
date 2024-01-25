@@ -2,20 +2,28 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:teslo_shop/features/auth/domain/domain.dart';
 import 'package:teslo_shop/features/auth/infraestructure/infraestructure.dart';
+import 'package:teslo_shop/features/shared/infraestructure/service/key_value_storage.dart';
+import 'package:teslo_shop/features/shared/infraestructure/service/key_value_storage_impl.dart';
 
 final authProvider = StateNotifierProvider<AuthNotifier, AuthState>((ref) {
   
   final authRepository = AuthRepositoryImpl();
+  final keyValueStorageService = KeyValueStorageImpl();
 
-  return AuthNotifier(authRepository: authRepository);
+  return AuthNotifier(
+    authRepository: authRepository,
+    keyValueStorageService: keyValueStorageService,
+  );
 });
 
 class AuthNotifier extends StateNotifier<AuthState> {
 
   final AuthRepository authRepository;
+  final KeyValueStorage keyValueStorageService;
 
   AuthNotifier({
     required this.authRepository,
+    required this.keyValueStorageService,
   }): super(AuthState());
 
   Future<void> loginUser(String email, String password) async {
@@ -41,8 +49,9 @@ class AuthNotifier extends StateNotifier<AuthState> {
 
   }
 
-  void _setLoggedUser(User user) {
-    // TODO: necesito guardar el token fisicamente
+  void _setLoggedUser(User user) async {
+    await keyValueStorageService.setKeyValue('token', user.token);
+    
     state = state.copyWith(
       user: user,
       authStatus: AuthStatus.authenticated,
@@ -51,7 +60,8 @@ class AuthNotifier extends StateNotifier<AuthState> {
   }
 
   Future<void> logout([String? errorMessage]) async {
-    // TODO: limpiar token
+    await keyValueStorageService.removeKey('token');
+    
     state = state.copyWith(
       authStatus: AuthStatus.notAuthenticated,
       user: null,
