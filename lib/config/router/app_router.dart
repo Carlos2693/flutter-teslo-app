@@ -3,9 +3,15 @@ import 'package:go_router/go_router.dart';
 import 'package:teslo_shop/features/auth/auth.dart';
 import 'package:teslo_shop/features/products/products.dart';
 
+import 'app_router_notifier.dart';
+
 final goRouterProvider = Provider((ref) {
+
+  final goRouterNotifier = ref.read(goRouterNotifierProvider);
+
   return GoRouter(
     initialLocation: '/splash',
+    refreshListenable: goRouterNotifier,
     routes: [
       ///* Auth Routes
       GoRoute(
