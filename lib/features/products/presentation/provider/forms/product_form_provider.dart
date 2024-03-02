@@ -4,6 +4,16 @@ import 'package:teslo_shop/config/const/environment.dart';
 import 'package:teslo_shop/features/products/domain/domain.dart';
 import 'package:teslo_shop/features/shared/infraestructure/input/input.dart';
 
+final productFormProvider = StateNotifierProvider.autoDispose.family<ProductFormNotifier, ProductFormState, Product>(
+  (ref, product) {
+
+    // todo create update callback
+
+    return ProductFormNotifier(
+      product: product
+    );
+  });
+
 class ProductFormNotifier extends StateNotifier<ProductFormState> {
   
   final void Function(Map<String, dynamic> productLike)? onSubmitCallback;
