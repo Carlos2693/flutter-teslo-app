@@ -8,6 +8,7 @@ final productFormProvider = StateNotifierProvider.autoDispose.family<ProductForm
   (ref, product) {
 
     // todo create update callback
+    
 
     return ProductFormNotifier(
       product: product
@@ -40,7 +41,8 @@ class ProductFormNotifier extends StateNotifier<ProductFormState> {
     _touchedEverything();
     if (!state.isValid) return false;
 
-    if (onSubmitCallback == null) return false;
+    // TODO regresar
+    // if (onSubmitCallback == null) return false;
 
     final productLike = {
       'id': state.id,
