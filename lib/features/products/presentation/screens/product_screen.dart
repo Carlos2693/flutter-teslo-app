@@ -12,7 +12,7 @@ class ProductScreen extends ConsumerWidget {
   void showSnackbar(BuildContext context) {
     ScaffoldMessenger.of(context).clearSnackBars();
     ScaffoldMessenger.of(context)
-        .showSnackBar(const SnackBar(content: Text('Proucto actualizado')));
+        .showSnackBar(const SnackBar(content: Text('Producto actualizado')));
   }
 
   @override
